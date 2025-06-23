@@ -1,10 +1,8 @@
-Here's a professional and comprehensive `README.md` for your MCP-based REST API server that enables full CRUD operations:
-
----
-
 # 🛠️ MCP REST API Server (CRUD + Auth)
 
 This is a Node.js-based [Model Context Protocol (MCP)](https://modelcontextprotocol.org/) server that provides full **CRUD operations** over a REST API using tools powered by [Axios](https://axios-http.com/). It includes features like authentication, data creation, update (PUT/PATCH), fetch, and delete.
+
+---
 
 ## 📦 Features
 
@@ -14,7 +12,7 @@ This is a Node.js-based [Model Context Protocol (MCP)](https://modelcontextproto
 * ✏️ `put_request`: Full update of a resource using `PUT`
 * 🩹 `patch_request`: Partial update using `PATCH`
 * ❌ `delete_request`: Delete a resource using `DELETE`
-* 🧠 Integrated with LLMs via MCP tools
+* 🤖 LLM-compatible with Claude and others via MCP interface
 
 ---
 
@@ -44,7 +42,7 @@ Ensure you have the following installed:
 npm install
 ```
 
-Or if dependencies are missing, manually install:
+Or manually install:
 
 ```bash
 npm install axios zod @modelcontextprotocol/sdk
@@ -56,120 +54,81 @@ npm install axios zod @modelcontextprotocol/sdk
 node index.js
 ```
 
-> You should see:
->
-> ```
-> REST API MCP Server for full CRUD operations with authentication running on stdio
-> ```
+You should see:
+
+```
+REST API MCP Server for full CRUD operations with authentication running on stdio
+```
 
 ---
 
 ## 🧪 Available Tools
 
-Each tool can be invoked via the MCP protocol interface.
+Each tool can be invoked via the MCP protocol interface:
 
-### ✅ 1. `generateToken`
+### ✅ `generateToken`
 
-Authenticate the user and generate a token.
+Authenticate a user and generate a token
+**Params**: `baseURL`, `endpoint`, `username`, `password`
 
-**Parameters**:
+### 📥 `fetchData`
 
-* `baseURL`: Base URL of the API
-* `endpoint`: Auth endpoint
-* `username`: Auth username
-* `password`: Auth password
+Fetch data from API using `GET`
+**Params**: `baseURL`, `endpoint`, `params` (optional)
 
----
+### ➕ `postrequest`
 
-### 📥 2. `fetchData`
+Create a new resource using `POST`
+**Params**: `baseURL`, `endpoint`, `payload` (JSON string)
 
-Fetch data via a `GET` request.
+### ✏️ `put_request`
 
-**Parameters**:
+Update a resource fully using `PUT`
+**Params**: `baseURL`, `endpoint`, `token`, `payload`
 
-* `baseURL`: API base URL
-* `endpoint`: API endpoint (relative)
-* `params`: (Optional) Query params as key-value pairs
+### 🩹 `patch_request`
 
----
+Update partially using `PATCH`
+**Params**: `baseURL`, `endpoint`, `token`, `payload`
 
-### ➕ 3. `postrequest`
+### ❌ `delete_request`
 
-Create a resource using `POST`.
-
-**Parameters**:
-
-* `baseURL`
-* `endpoint`
-* `payload`: Raw JSON string to post
+Delete a resource using `DELETE`
+**Params**: `baseURL`, `endpoint`, `token`
 
 ---
 
-### ✏️ 4. `put_request`
+## 🤖 𝐇𝐨𝐰 𝐭𝐨 𝐜𝐨𝐧𝐧𝐞𝐜𝐭 𝐭𝐡𝐢𝐬 𝐰𝐢𝐭𝐡 𝐋𝐋𝐌 𝐥𝐢𝐤𝐞 𝐂𝐥𝐚𝐮𝐝𝐞
 
-Fully update a resource via `PUT`.
+To use this server as a tool with Claude (Anthropic) or other LLMs that support MCP, include the following configuration in your `.mcp.json` or wherever your tooling is configured:
 
-**Parameters**:
-
-* `baseURL`
-* `endpoint`
-* `token`: Auth token (sent in cookie)
-* `payload`: Raw JSON string to update
-
----
-
-### 🩹 5. `patch_request`
-
-Partially update a resource via `PATCH`.
-
-**Parameters**:
-
-* `baseURL`
-* `endpoint`
-* `token`: Auth token (sent in cookie)
-* `payload`: Raw JSON string
-
----
-
-### ❌ 6. `delete_request`
-
-Delete a resource via `DELETE`.
-
-**Parameters**:
-
-* `baseURL`
-* `endpoint`
-* `token`: Auth token (sent in cookie)
-
----
-
-## 🧠 Integration Use Case
-
-This server can be used in coordination with LLMs that support MCP, allowing dynamic prompting for CRUD operations by simply describing intent like:
-
-> "Create a booking with this payload..."
-
-Or
-
-> "Fetch all users with `active=true`..."
+```json
+{
+  "mcpServers": {
+    "httpServer": {
+      "command": "npx",
+      "args": ["-y", "@princeautomationdestination/rest-mcp-server"]
+    }
+  }
+}
+```
 
 ---
 
 ## 🛡️ Error Handling
 
-Each operation returns:
+Every tool handles its own error and returns:
 
-* `content.text` on success
-* Error message on failure (e.g., network error or invalid credentials)
-
-Server logs errors to `stderr`.
+* Friendly message on failure
+* JSON string of response data on success
+* Full logs to `stderr` for debugging
 
 ---
 
 ## 📄 License
 
-MIT License. Feel free to use and modify.
+MIT License. Open for use, extension, and community contribution.
 
 ---
 
-Let me know if you'd like a `package.json` or GitHub Action CI/CD setup for this project too.
+Let me know if you want a badge section, Dockerfile, or `package.json` template to publish your MCP server to npm.
