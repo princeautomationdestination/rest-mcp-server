@@ -104,12 +104,12 @@ To use this server as a tool with Claude (Anthropic) or other LLMs that support 
 
 ```json
 {
-  "mcpServers": {
-    "httpServer": {
-      "command": "npx",
-      "args": ["-y", "@princeautomationdestination/rest-mcp-server"]
-    }
-  }
+ "mcpServers": {
+ "httpServer": {
+ "command": "npx",
+ "args": ["-y", "@princeautomationdestination/rest-mcp-server"]
+ }
+ }
 }
 ```
 
